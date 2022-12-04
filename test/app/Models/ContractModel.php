@@ -16,4 +16,11 @@ class ContractModel extends Model
         'updated_at',
         'deleted_at',
     ];
+    protected $fillable = [
+        'id',
+        'id_user',
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('number');
             $table->integer('created_at');
             $table->integer('updated_at');
-            $table->integer('deleted_at');
+            $table->integer('deleted_at')->nullable();
             // $table->softDeletes();
         });
     }

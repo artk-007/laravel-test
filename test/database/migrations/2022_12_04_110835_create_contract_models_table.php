@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('id_user');
             $table->integer('created_at');
             $table->integer('updated_at');
-            $table->integer('deleted_at');
+            $table->integer('deleted_at')->nullable();
             // $table->softDeletes();
         });
     }

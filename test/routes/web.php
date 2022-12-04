@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SimController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ContractController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,12 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/sim', function () {
-    dd(1);
-})->middleware(['auth', 'verified'])->name('sim');
-Route::get('/contracts', function () {
-    Gate::authorize('viev-contracts');
-    dd(2);
-})->middleware(['auth', 'verified'])->name('contracts');
+Route::get('/sim', [SimController::class,'index'])->middleware(['auth', 'verified'])->name('sim');
+Route::get('/sim/{id}', [SimController::class,'show'])->middleware(['auth', 'verified']);
+Route::get('/contracts', [ContractController::class,'index'])->middleware(['auth', 'verified'])->name('contracts');
+
 
 require __DIR__.'/auth.php';

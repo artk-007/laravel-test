@@ -16,4 +16,12 @@ class SimModel extends Model
         'updated_at',
         'deleted_at',
     ];
+    protected $fillable = [
+        'id',
+        'id_contract',
+        'number',
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
 }
