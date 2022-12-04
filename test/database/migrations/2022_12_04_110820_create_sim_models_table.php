@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('sim_models', function (Blueprint $table) {
+            $table->id();
+            $table->integer('id_contract');
+            $table->integer('number');
+            $table->integer('created_at');
+            $table->integer('updated_at');
+            $table->integer('deleted_at');
+            // $table->softDeletes();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('sim_models');
+    }
+};

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,5 +28,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/sim', function () {
+    dd(1);
+})->middleware(['auth', 'verified'])->name('sim');
+Route::get('/contracts', function () {
+    Gate::authorize('viev-contracts');
+    dd(2);
+})->middleware(['auth', 'verified'])->name('contracts');
 
 require __DIR__.'/auth.php';
