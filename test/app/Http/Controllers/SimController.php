@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContractModel;
 use App\Models\SimModel;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -18,8 +20,9 @@ class SimController extends Controller
         if (Gate::check('viev-contracts')) {
             $sim = SimModel::get();
         } else {
-            $sim = SimModel::leftjoin('contract_models', 'sim_models.id_contract', '=', 'contract_models.id')
-            ->where('contract_models.id_user', auth()->id())->get();
+            $contract = ContractModel::whereBelongsTo(auth()->user())->get();
+            $sim = $contract[0]->sim;
+            // $sim = SimModel::where('user_id', auth()->user()->id)->get();
         }
         return $sim;
     }
@@ -45,8 +48,7 @@ class SimController extends Controller
     public function show($id)
     {
         Gate::authorize('viev-contracts');
-        $sim = SimModel::leftjoin('contract_models', 'sim_models.id_contract', '=', 'contract_models.id')
-        ->where('contract_models.id', $id)->get();
+        $sim = SimModel::where('contract_id', $id)->get();
         if (is_null($sim)) {
             return 'Not found';
         }
