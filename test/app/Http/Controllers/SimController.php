@@ -7,6 +7,7 @@ use App\Models\SimModel;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 
 class SimController extends Controller
 {
@@ -24,7 +25,9 @@ class SimController extends Controller
             $sim = $contract[0]->sim;
             // $sim = SimModel::where('user_id', auth()->user()->id)->get();
         }
-        return $sim;
+
+        return View('sim', ['data' => $sim]);
+        // return $sim;
     }
 
     /**
@@ -52,7 +55,7 @@ class SimController extends Controller
         if (is_null($sim)) {
             return 'Not found';
         }
-        return $sim;
+        return View('sim', ['data' => $sim]);
     }
 
     /**
