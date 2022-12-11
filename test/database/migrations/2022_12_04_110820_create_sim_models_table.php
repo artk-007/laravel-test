@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('sim_models', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_contract');
-            $table->integer('number');
+            $table->unsignedBigInteger('contract_id');
+            $table->string('number');
             $table->integer('created_at');
             $table->integer('updated_at');
             $table->integer('deleted_at')->nullable();
+            $table->foreign('contract_id')->references('id')->on('contract_models');
             // $table->softDeletes();
         });
     }
