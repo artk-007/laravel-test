@@ -29,4 +29,8 @@ class SimModel extends Model
     {
         return $this->belongsTo(ContractModel::class, 'contract_id', 'id');
     }
+    public function group()
+    {
+        return $this->belongsToMany(group_sim::class);
+    }
 }
