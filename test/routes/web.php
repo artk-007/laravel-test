@@ -40,7 +40,7 @@ Route::get('/contracts/add', function () {
     return view('form_contract');
 })->middleware(['auth', 'verified'])->name('contracts/add');
 
-Route::get('/contracts/save', [ContractController::class,'store'])->middleware(['auth', 'verified'])->name('contracts/save');
+Route::post('/contract/save', [ContractController::class,'store'])->middleware(['auth', 'verified'])->name('contracts/save');
 
 
 require __DIR__.'/auth.php';

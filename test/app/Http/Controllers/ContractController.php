@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ContractModel;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\ContractSimRequest;
+use App\Models\SimModel;
+use App\Models\User;
 
 class ContractController extends Controller
 {
@@ -27,10 +30,14 @@ class ContractController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContractSimRequest $request)
     {
-        $contract = ContractModel::create($request->all());
-        // dd($contract);
+        $contract = new ContractModel();
+        $sim = new SimModel(['number' => $request->number]);
+        $user = User::where('email', $request->email)->first();
+        $contract = $user->contracts()->Save($contract);
+        $contract->sim()->save($sim);
+        return "Ok!";
     }
 
     /**
