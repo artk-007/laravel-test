@@ -18,9 +18,14 @@
                     <x-nav-link :href="route('sim')" :active="request()->routeIs('sim')">
                         Сим-карты
                     </x-nav-link>
+                    @if(Gate::check('viev-contracts'))
                     <x-nav-link :href="route('contracts')" :active="request()->routeIs('contracts')">
                         Контракты
                     </x-nav-link>
+                    <x-nav-link :href="route('contracts/add')" :active="request()->routeIs('contracts')">
+                        Добавить Контракт
+                    </x-nav-link>
+                    @endif
                 </div>
             </div>
 
