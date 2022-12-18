@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Форма контрактов') }}
+            {{ __('Форма добавления сим-карты') }}
         </h2>
     </x-slot>
 
@@ -14,24 +14,24 @@
                 @endforeach
             </ul>
         @endif
-        <form action="/contract/save" method="post">
+        <form action="/sim/save" method="post">
             @csrf
             <div class="mb-3">
-                <label for="user">Выберите пользователя для создания контракта</label>
+                <label for="contract">Выберите Контракт для создания симкарты</label>
                 <br>
-                <p><select size="3" multiple name="user">
-                    <option disabled>Выберите пользователя</option>
-                    @foreach($data as $user)
-                    <option value="{{$user->id}}">{{$user->name}} ({{$user->email}})</option>
+                <p><select size="3" multiple name="contract">
+                    <option disabled>Выберите контракт</option>
+                    @foreach($data as $contract)
+                    <option value="{{$contract->id}}">№ {{$contract->id}}</option>
                     @endforeach
                 </select></p>
                 <!-- <input type="email" id="email" name="email" class="form-control"> -->
             </div>
-            <!-- <div class="mb-3">
+            <div class="mb-3">
                 <label for="number">Введите номер телефлна, чтобы добавить сим карту и привязать к контракту</label>
                 <br>
                 <input type="text" id="number" name="number" class="form-control">
-            </div> -->
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form> 
     </div>

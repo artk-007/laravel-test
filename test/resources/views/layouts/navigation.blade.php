@@ -22,8 +22,11 @@
                     <x-nav-link :href="route('contracts')" :active="request()->routeIs('contracts')">
                         Контракты
                     </x-nav-link>
-                    <x-nav-link :href="route('contracts/add')" :active="request()->routeIs('contracts')">
+                    <x-nav-link :href="route('contracts/add')" :active="request()->routeIs('contractss/add')">
                         Добавить Контракт
+                    </x-nav-link>
+                    <x-nav-link :href="route('sim/add')" :active="request()->routeIs('sim/add')">
+                        Добавить симкарту
                     </x-nav-link>
                     @endif
                 </div>

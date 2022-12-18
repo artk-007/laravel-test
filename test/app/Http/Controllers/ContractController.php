@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ContractModel;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\ContractSimRequest;
 use App\Models\SimModel;
 use App\Models\User;
 
@@ -21,7 +20,7 @@ class ContractController extends Controller
         Gate::authorize('viev-contracts');
         $contracts = ContractModel::get();
         // dd($contracts);
-        return $contracts;
+        return View('contract', ['data' => $contracts]);
     }
 
     /**
@@ -30,14 +29,19 @@ class ContractController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ContractSimRequest $request)
+    public function store(Request $request)
     {
         $contract = new ContractModel();
-        $sim = new SimModel(['number' => $request->number]);
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('id', $request->user)->first();
         $contract = $user->contracts()->Save($contract);
-        $contract->sim()->save($sim);
-        return "Ok!";
+        return redirect('sim/' . $contract->id);
+    }
+    
+    public function getForm()
+    {
+        Gate::authorize('viev-contracts');
+        $users = User::all();
+        return View('form_contract', ['data' => $users]);
     }
 
     /**

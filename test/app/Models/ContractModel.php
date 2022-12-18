@@ -25,12 +25,12 @@ class ContractModel extends Model
         'updated_at',
         'deleted_at'
     ];
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsToMany(User::class);
     }
-    public function sim()
+    public function sims()
     {
-        return $this->hasOne(SimModel::class, 'contract_id', 'id');
+        return $this->hasMany(SimModel::class, 'contract_id', 'id');
     }
 }

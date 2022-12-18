@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContractModel;
 use App\Models\SimModel;
-use Illuminate\Foundation\Auth\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Models\ContractModel;
+use App\Http\Requests\SimRequest;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Gate;
 
 class SimController extends Controller
 {
@@ -21,9 +22,10 @@ class SimController extends Controller
         if (Gate::check('viev-contracts')) {
             $sim = SimModel::get();
         } else {
-            $contract = ContractModel::whereBelongsTo(auth()->user())->get();
-            $sim = $contract[0]->sim;
-            // $sim = SimModel::where('user_id', auth()->user()->id)->get();
+            $sim = new \Illuminate\Database\Eloquent\Collection;
+            foreach (auth()->user()->contracts as $contract) {
+                $sim = $sim->merge($contract->sims);
+            }
         }
 
         return View('sim', ['data' => $sim]);
@@ -36,12 +38,19 @@ class SimController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SimRequest $request)
     {
-        $sim = SimModel::create($request->all());
-        //
+        $contract = ContractModel::where('id', $request->contract)->first();
+        $sim = new SimModel(['number' => $request->number]);
+        $contract->sims()->save($sim);
+        return redirect('sim/' . $contract->id);
     }
-
+    public function getForm()
+    {
+        Gate::authorize('viev-contracts');
+        $contracts = ContractModel::all();
+        return View('form_sim', ['data' => $contracts]);
+    }
     /**
      * Display the specified resource.
      *
@@ -52,10 +61,10 @@ class SimController extends Controller
     {
         Gate::authorize('viev-contracts');
         $sim = SimModel::where('contract_id', $id)->get();
-        if (is_null($sim)) {
-            return 'Not found';
+        if ($sim->isEmpty()) {
+            $sim = false;
         }
-        return View('sim', ['data' => $sim]);
+        return View('sim', ['data' => $sim,'id_contract' => $id]);
     }
 
     /**
