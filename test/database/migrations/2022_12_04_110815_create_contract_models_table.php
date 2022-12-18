@@ -15,11 +15,9 @@ return new class extends Migration
     {
         Schema::create('contract_models', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->integer('created_at');
             $table->integer('updated_at');
             $table->integer('deleted_at')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
             // $table->softDeletes();
         });
     }

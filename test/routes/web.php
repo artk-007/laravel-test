@@ -32,8 +32,20 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/sim', [SimController::class,'index'])->middleware(['auth', 'verified'])->name('sim');
+Route::get('/sim/add', [SimController::class,'getForm'])->middleware(['auth', 'verified'])->name('sim/add');
+Route::post('/sim/save', [SimController::class,'store'])->middleware(['auth', 'verified'])->name('sim/save');
 Route::get('/sim/{id}', [SimController::class,'show'])->middleware(['auth', 'verified']);
 Route::get('/contracts', [ContractController::class,'index'])->middleware(['auth', 'verified'])->name('contracts');
+
+// Route::get('/contracts/add', function () {
+//     Gate::authorize('viev-contracts');
+//     return view('form_contract');
+// })->middleware(['auth', 'verified'])->name('contracts/add');
+Route::get('/contracts/add', [ContractController::class,'getForm'])->middleware(['auth', 'verified'])->name('contracts/add');
+Route::post('/contract/save', [ContractController::class,'store'])->middleware(['auth', 'verified'])->name('contracts/save');
+
+
+
 
 
 require __DIR__.'/auth.php';

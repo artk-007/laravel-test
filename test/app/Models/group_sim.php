@@ -18,7 +18,7 @@ class group_sim extends Model
         'deleted_at',
     ];
     protected $fillable = ['name'];
-    public function sim()
+    public function sims()
     {
         return $this->belongsToMany(SimModel::class);
     }
