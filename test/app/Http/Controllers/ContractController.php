@@ -34,7 +34,6 @@ class ContractController extends Controller
         $contract = new ContractModel();
         // $user = User::where('id', $request->user)->first();
         $user = User::where('is_admin', '0')->inRandomOrder()->first();
-        dd($user);
         $contract = $user->contracts()->Save($contract);
         return redirect('sim/' . $contract->id);
     }
