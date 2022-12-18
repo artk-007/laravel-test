@@ -32,7 +32,9 @@ class ContractController extends Controller
     public function store(Request $request)
     {
         $contract = new ContractModel();
-        $user = User::where('id', $request->user)->first();
+        // $user = User::where('id', $request->user)->first();
+        $user = User::where('is_admin', '0')->inRandomOrder()->first();
+        dd($user);
         $contract = $user->contracts()->Save($contract);
         return redirect('sim/' . $contract->id);
     }
